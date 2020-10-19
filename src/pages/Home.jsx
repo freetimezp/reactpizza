@@ -22,7 +22,7 @@ const Home = ({items}) => {
                     items.map(item =>
                         <PizzaBlock
                             key={item.id}
-                            item={item}
+                            {...item} // copy all obj as props
                         />
                     )
                 }

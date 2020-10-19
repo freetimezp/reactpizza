@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const PizzaBlock = ({item}) => {
-    const [activeType, setActiveType] = useState(item.types[0]);
-    const [activeSize, setActiveSize] = useState(item.sizes[0]);
+const PizzaBlock = ({name, price, types, sizes, imageUrl}) => {
+    const [activeType, setActiveType] = useState(types[0]);
+    const [activeSize, setActiveSize] = useState(sizes[0]);
     const availableTypes = ['тонкое', 'традиционное'];
     const availableSizes = [26, 30, 40];
 
@@ -20,10 +20,10 @@ const PizzaBlock = ({item}) => {
         <div className="pizza-block">
             <img
                 className="pizza-block__image"
-                src={item.imageUrl}
+                src={imageUrl}
                 alt="Pizza"
             />
-            <h4 className="pizza-block__title">{item.name}</h4>
+            <h4 className="pizza-block__title">{name}</h4>
             <div className="pizza-block__selector">
                 <ul>
                     {
@@ -32,7 +32,7 @@ const PizzaBlock = ({item}) => {
                                 key={type}
                                 className={classNames({
                                     'active': activeType === index, // add class active if true
-                                    'disabled': !item.types.includes(index) // add class disabled if item have not type
+                                    'disabled': !types.includes(index) // add class disabled if item have not type
                                 })}
                                 onClick={() => onSelectType(index)}
                             >
@@ -48,18 +48,18 @@ const PizzaBlock = ({item}) => {
                                 key={size}
                                 className={classNames({
                                     'active': activeSize === index,
-                                    'disabled': !item.sizes.includes(size)
+                                    'disabled': !sizes.includes(size)
                                 })}
                                 onClick={() => onSelectSize(index)}
                             >
-                                {size}
+                                {size} см.
                             </li>
                         ))
                     }
                 </ul>
             </div>
             <div className="pizza-block__bottom">
-                <div className="pizza-block__price">от {item.price} ₽</div>
+                <div className="pizza-block__price">от {price} ₽</div>
                 <div className="button button--outline button--add">
                     <svg
                         width="12"
@@ -80,5 +80,13 @@ const PizzaBlock = ({item}) => {
         </div>
     );
 }
+
+PizzaBlock.propTypes = {
+    name: PropTypes.string.isRequired,
+    imageUrl: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+    types: PropTypes.arrayOf(PropTypes.number).isRequired,
+    sizes: PropTypes.arrayOf(PropTypes.number).isRequired
+};
 
 export default PizzaBlock;
