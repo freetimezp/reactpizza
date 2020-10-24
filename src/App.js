@@ -3,11 +3,9 @@ import {Route} from 'react-router-dom';
 import axios from 'axios';
 import {connect} from 'react-redux';
 
-import store from "./redux/store";
-
 import {Header, Home, Cart} from "./components/components.js";
-import {setPizzas as setPizzasAction} from './redux/actions/pizzas.js';
 
+import {setPizzas as setPizzasAction} from './redux/actions/pizzasAC.js';
 
 // function App() {
 //
@@ -28,7 +26,7 @@ import {setPizzas as setPizzasAction} from './redux/actions/pizzas.js';
 class App extends React.Component {
     componentDidMount() {
         axios.get('http://localhost:3000/db.json').then(({data}) => {
-            this.props.setPizzas(data.pizzas);
+            this.props.setPizzasToState(data.pizzas);
          });
     }
 
@@ -47,13 +45,14 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        items: state.pizzas.items
+        items: state.pizzas.items,
+        filters: state.filters
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setPizzas: (items) => dispatch(setPizzasAction(items))
+        setPizzasToState: (items) => dispatch(setPizzasAction(items))
     }
 }
 
