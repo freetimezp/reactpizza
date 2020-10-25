@@ -2,7 +2,7 @@ import React from 'react';
 import {useState, useEffect, useRef} from 'react';
 
 
-const SortPopup = ({items}) => {
+const SortPopup = React.memo(function SortPopup ({items}) { // react memo use when we have not needed rerender
     const [visiblePopup, setVisiblePopup] = useState(false);
     const [activeItem, setActiveItem] = useState(0);
     const sortRef = useRef();
@@ -57,21 +57,21 @@ const SortPopup = ({items}) => {
                 <div className="sort__popup">
                     <ul>
                         {items &&
-                            items.map((item, index) =>
-                                <li
-                                    className={activeItem === index ? 'active' : ''}
-                                    onClick={() => onSelectItem(index)}
-                                    key={`${item.type}_${index}`}
-                                >
-                                    {item.name}
-                                </li>
-                            )
+                        items.map((item, index) =>
+                            <li
+                                className={activeItem === index ? 'active' : ''}
+                                onClick={() => onSelectItem(index)}
+                                key={`${item.type}_${index}`}
+                            >
+                                {item.name}
+                            </li>
+                        )
                         }
                     </ul>
                 </div>
             }
         </div>
     );
-}
+});
 
 export default SortPopup;
